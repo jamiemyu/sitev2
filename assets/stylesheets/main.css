@@ -1,0 +1,323 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald:300,400,700);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
+
+body {
+    color: #442D2D;
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 200;
+    margin: 0;
+    position: relative;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.side-bar-container {
+    height: 100%;
+    margin-left: 32px;
+    margin-right: 24px;
+    margin-top: 32px;
+    position: fixed;
+    width: 150px;
+}
+
+.side-bar-container ul {
+    margin: 0;
+    padding: 0;
+}
+
+.side-bar-container ul li {
+    display: inline-block;
+    margin-bottom: 32px;
+    width: 100%;
+}
+
+.side-bar-container ul li a {
+    color: #560032;
+    font-size: 24px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.home {
+    display: inline-flex;
+    margin-left: 150px;
+    width: auto;
+    position: relative;
+}
+
+.right-panel {
+    background-color: #5E878E;
+    display: -webkit-box;
+    margin-right: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    position: relative;
+    text-align: -webkit-right;
+}
+
+.sections {
+    background-color: white;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    margin-left: 150px;
+    margin-right: 32px;
+    width: auto;
+}
+
+#contact-img {
+    display: inline-block;
+    float: left;
+    max-width: 50%;
+}
+
+#contact-img img {
+    max-width: 100%;
+    min-height: 500px;
+    min-width: 650px;
+}
+
+#name {
+    color: white;
+    display: -webkit-inline-box;
+    font-size: 108px;
+    margin-top: 40px;
+    max-width: 700px; 
+}
+
+#short-bio {
+    color: white;
+    display: -webkit-inline-box;
+    font-size: 3vw;
+    margin-bottom: 40px;
+    margin-left: 116px;
+}
+
+#info-links {
+    display: inline-block;
+    margin-left: -96px;
+    margin-top: 40px;
+    position: absolute;
+}
+
+#info-links img {
+    display: block;
+    margin-bottom: 24px;
+}
+
+#about-me, #projects, #interests {
+    padding-top: 32px;
+}
+
+/* Override UGG site */
+#main {
+    width: 100%; 
+    padding:0;
+}
+
+.content-asset p {
+    margin:0 auto;
+}
+
+.breadcrumb {
+    display:none;
+}
+
+/* Helpers */
+/**************************/
+.margin-top-10 {
+    padding-top:10px;
+}
+
+.margin-bot-10 {
+    padding-bottom:10px;
+}
+
+/* Typography */
+/**************************/
+#parallax h1 {
+    color: #415e63;
+    font-family:'Oswald', sans-serif; 
+    font-size:24px;
+    font-weight:400;
+    text-transform: uppercase;
+    padding:0;
+    margin:0;
+}
+
+#parallax h2 {
+    font-family:'Oswald', sans-serif;
+    font-size:70px;
+    letter-spacing:10px;
+    text-align:center; 
+    color:white; 
+    font-weight:400; 
+    text-transform:uppercase; 
+    z-index:10; 
+    opacity:.9;
+}
+
+#parallax h3 {
+    color: #415e63;
+    font-family:'Oswald', sans-serif; 
+    font-size:14px; 
+    line-height:0; 
+    font-weight:400; 
+    letter-spacing:8px; 
+    text-transform: uppercase;
+}
+
+#parallax p {
+    font-family:'Source Sans Pro', sans-serif; 
+    font-weight:400; 
+    font-size:14px; 
+    line-height:24px;
+}
+
+.first-character {
+    font-weight:400; 
+    float: left; 
+    font-size: 84px; 
+    line-height: 64px; 
+    padding-top: 4px; 
+    padding-right: 8px; 
+    padding-left: 3px; 
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.section1, .section2, .section3 {
+    color: #560032;
+}
+
+/* Section - Title */
+/**************************/
+#parallax .title {
+    background: white;
+    color: #5E878E;
+    padding: 75px;
+    margin:0 auto;
+    text-align:center;
+}
+
+#parallax .title h1 {
+    font-size:35px;
+    letter-spacing:8px;
+}
+
+#parallax .title a {
+    color: #5E878E;
+    text-decoration: none;
+}
+
+/* Section - Block */
+/**************************/
+#parallax .block {
+    background: white; 
+    padding: 100px; 
+    width: 820px; 
+    margin:0 auto; 
+    text-align:justify;
+}
+
+#parallax .block-gray {
+    background: #f2f2f2;
+    padding: 60px;
+}
+
+#parallax .section-overlay-mask {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: black; 
+    opacity: 0.70;
+}
+
+/* Section - Parallax */
+/**************************/
+#parallax #about-me {
+    background-attachment: fixed; 
+    background-image: url('../images/bosImage.jpg');
+    background-repeat: no-repeat; 
+    background-position: top center;
+    background-size: cover; 
+    -moz-background-size: cover; 
+    overflow: hidden; 
+    padding-top: 100px; 
+    padding-bottom: 100px;
+    position: relative; 
+    -webkit-background-size: cover; 
+    width: 100%; 
+}
+
+#parallax #studying {
+    background-attachment: fixed;
+    background-image: url('../images/cleImage.jpg');  
+    background-position: center center;
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    -moz-background-size: cover; 
+    overflow: hidden; 
+    padding-top: 100px; 
+    padding-bottom: 100px;
+    position: relative; 
+    -webkit-background-size: cover; 
+    width: 100%; 
+}
+
+#parallax #exploring {
+    padding-top: 100px; 
+    padding-bottom: 100px;
+    overflow: hidden; 
+    position: relative; 
+    width: 100%; 
+    background-image: url('../images/sfImage.jpg'); 
+    background-attachment: fixed; 
+    background-size: cover; 
+    -moz-background-size: cover; 
+    -webkit-background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center;
+}
+
+/* Extras */
+/**************************/
+#parallax .line-break {
+    border-bottom:1px solid black; 
+    width: 150px; 
+    margin:0 auto;
+}
+
+/* Media Queries */
+/**************************/
+@media screen and (max-width: 959px) and (min-width: 768px) {
+  #parallax .block {padding: 40px; width:620px;}
+}
+
+@media screen and (max-width: 767px) {
+  #parallax .block {
+      padding: 30px; 
+      width:420px;
+    }
+  #parallax h2 {
+      font-size:30px;
+    }
+  #parallax .block {
+      padding: 30px;
+    }
+  #parallax .parallax-one, #parallax .parallax-two, #parallax .parallax-three {
+      padding-top:100px; 
+      padding-bottom:100px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+  #parallax .block {
+      padding: 30px 15px; 
+      width:290px;
+    }
+}

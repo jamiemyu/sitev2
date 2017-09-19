@@ -1,0 +1,66 @@
+/* Section - Title */
+/**************************/
+#parallax .project-title {
+    background: white;
+    color: #5E878E;
+    padding: 300px;
+    margin:0 auto;
+    text-align:center;
+}
+
+#parallax .project-title h1 {
+    font-size: 70px;
+    letter-spacing:8px;
+}
+
+#parallax .project-title h3 {
+    font-size: 35px;
+}
+
+#parallax .project-title a {
+    color: #5E878E;
+    text-decoration: none;
+}
+
+
+/* Section - Parallax */
+/**************************/
+#parallax #ad-monitoring {
+    background-attachment: fixed; 
+    background-image: url('../images/ad-monitoring.jpg');
+    background-repeat: no-repeat; 
+    background-position: top center;
+    background-size: cover;
+    -moz-background-size: cover; 
+    overflow: hidden; 
+    padding-bottom: 85px;
+    padding-top: 85px; 
+    position: relative; 
+    -webkit-background-size: cover; 
+    width: 100%; 
+}
+
+#parallax #ad-monitoring h2 {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+#parallax #dr-detection {
+    background-attachment: fixed;
+    background-image: url('../images/dr-detection.jpg');  
+    background-position: center center;
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    -moz-background-size: cover; 
+    overflow: hidden; 
+    padding-top: 85px; 
+    padding-bottom: 85px; 
+    position: relative; 
+    -webkit-background-size: cover; 
+    width: 100%; 
+}
+
+#parallax #dr-detection h2 {
+    margin-left: 24px;
+    margin-right: 24px;
+}
