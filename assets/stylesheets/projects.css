@@ -1,3 +1,9 @@
+.block a {
+    color: #5E878E;
+    font-weight: 600;
+    text-decoration: none;
+}
+
 /* Section - Title */
 /**************************/
 #parallax .project-title {
@@ -64,3 +70,4 @@
     margin-left: 24px;
     margin-right: 24px;
 }
+

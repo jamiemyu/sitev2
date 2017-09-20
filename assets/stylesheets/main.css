@@ -35,7 +35,7 @@ body {
 }
 
 .side-bar-container ul li a {
-    color: #560032;
+    color: #5E878E;
     font-size: 24px;
     font-weight: 400;
     text-decoration: none;
@@ -49,7 +49,7 @@ body {
 }
 
 .right-panel {
-    background-color: #5E878E;
+    background-color: #B4A4AB;
     display: -webkit-box;
     margin-right: 32px;
     padding-left: 32px;
