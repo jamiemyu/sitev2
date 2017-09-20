@@ -145,7 +145,6 @@ body {
 /**************************/
 #parallax .title {
     background: white;
-    color: #5E878E;
     padding: 75px;
     margin:0 auto;
     text-align:center;
@@ -167,6 +166,7 @@ body {
     background-repeat: no-repeat; 
     background-position: top center;
     background-size: cover; 
+    color: #5E878E;
     -moz-background-size: cover; 
     overflow: hidden; 
     padding-top: 100px; 
@@ -184,8 +184,8 @@ body {
     background-size: cover; 
     -moz-background-size: cover; 
     overflow: hidden; 
-    padding-top: 100px; 
-    padding-bottom: 100px;
+    padding-top: 50px; 
+    padding-bottom: 50px;
     position: relative; 
     -webkit-background-size: cover; 
     width: 100%; 
@@ -255,6 +255,10 @@ body {
     width: 820px; 
     margin:0 auto; 
     text-align:justify;
+}
+
+#parallax .arrow {
+    text-align: center;
 }
 
 #parallax .block-gray {
@@ -343,6 +347,7 @@ body {
 }
 
 .material-icons.md-48 {
+    color: #5E878E;
     font-size: 48px;
     transform: scale(0.75,0.75);
     transition: transform 0.6s ease-in-out;
