@@ -130,7 +130,7 @@ body {
     float: left; 
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 84px; 
-    font-weight:400;
+    font-weight: 400;
     line-height: 64px; 
     padding-top: 4px; 
     padding-right: 8px; 
@@ -145,7 +145,7 @@ body {
 /**************************/
 #parallax .title {
     background: white;
-    padding: 30px;
+    padding: 75px;
     margin:0 auto;
     text-align:center;
 }
@@ -251,13 +251,17 @@ body {
 /**************************/
 #parallax .block {
     background: white; 
-    padding: 75px; 
+    padding: 150px; 
     width: 820px; 
     margin:0 auto; 
     text-align:justify;
 }
 
-#parallax .arrow {
+#parallax .arrow-down {
+    text-align: center;
+}
+
+#parallax .arrow-up {
     text-align: center;
 }
 
@@ -288,7 +292,7 @@ body {
 /**************************/
 @media screen and (max-width: 959px) and (min-width: 768px) {
   #parallax .block {
-      padding: 40px; 
+      padding: 60px; 
       width:620px;
     }
 }
@@ -348,7 +352,7 @@ body {
 
 .material-icons.md-48 {
     color: #5E878E;
-    font-size: 48px;
+    font-size: 64px;
     transform: scale(0.75,0.75);
     transition: transform 0.6s ease-in-out;
 }
