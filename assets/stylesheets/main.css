@@ -169,8 +169,8 @@ body {
     color: #5E878E;
     -moz-background-size: cover; 
     overflow: hidden; 
-    padding-top: 100px; 
-    padding-bottom: 100px;
+    padding-top: 50px; 
+    padding-bottom: 50px;
     position: relative; 
     -webkit-background-size: cover; 
     width: 100%; 
@@ -199,8 +199,8 @@ body {
     background-size: cover;
     -moz-background-size: cover; 
     overflow: hidden; 
-    padding-top: 100px; 
-    padding-bottom: 100px;
+    padding-top: 50px; 
+    padding-bottom: 50px;
     position: relative; 
     -webkit-background-size: cover; 
     width: 100%; 
