@@ -1,8 +1,8 @@
 body {
-        font-family: Courier;
-        margin-left: 128px;
-        margin-right: 128px;
-        padding-top: 24px;
+    font-family: Courier;
+    margin-left: 96px;
+    margin-right: 96px;
+    padding-top: 24px;
 }
 
 ul {
@@ -10,32 +10,38 @@ ul {
 }
 
 #blurb {
-        display: inline-block;
+    display: inline-block;
 }
 
 #blurb-container {
-        margin-top: 32px;
-        margin-bottom: 32px;
+    margin-top: 32px;
+    margin-bottom: 32px;
 }
 
 .label {
-        font-weight: bold;
+    font-weight: bold;
 }
 
 .label a:link {
-        text-decoration: none;
+    color: #689ea5;
+    text-decoration: none;
+}
+
+.label a:hover, a:active {
+    text-decoration: underline;
+}
+
+.label a:visited {
+    color: #345054;
 }
 
 #title-container {
-        font-size: 32px;
-        font-weight: bold;
-        text-align: center;
-}
-
-#quick-links-container a {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .subtitle-container {
-        font-size: 16px;
+    font-size: 16px;
 }
 
