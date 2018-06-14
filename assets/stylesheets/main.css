@@ -5,6 +5,10 @@ body {
         padding-top: 24px;
 }
 
+ul {
+    list-style-type: none;
+}
+
 #blurb {
         display: inline-block;
 }
@@ -15,7 +19,6 @@ body {
 }
 
 .label {
-        display: inline-block; 
         font-weight: bold;
 }
 
