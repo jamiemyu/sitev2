@@ -1,0 +1,8 @@
+body {
+    font-family: Courier;
+    margin: 32px;
+}
+
+#results {
+    display: none;
+}

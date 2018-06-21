@@ -1,0 +1,21 @@
+{
+  "name": "the-food-machine",
+  "version": "1.0.0",
+  "description": "A simple server used to run applications",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js"
+  },
+  "author": "Jamie Yu",
+  "license": "ISC",
+  "dependencies": {
+    "cities": "^1.1.2",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.1.2",
+    "nodemon": "^1.17.5"
+  },
+  "devDependencies": {
+    "node-watch": "^0.5.8"
+  }
+}
