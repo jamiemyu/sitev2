@@ -1,0 +1,30 @@
+body {
+    font-family: Courier;
+    margin: 72px;
+}
+
+#generate-container {
+    background-color: #e3eced;
+    border-radius: 5px;
+    color: #689ea5;
+    cursor: pointer;
+    height: 100%;
+}
+
+#title-container{
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#idea-container {
+    color: #345054;
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
