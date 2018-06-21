@@ -9,6 +9,10 @@ ul {
     list-style-type: none;
 }
 
+ul:hover {
+    color: #689ea5;
+}
+
 #blurb {
     display: inline-block;
 }
