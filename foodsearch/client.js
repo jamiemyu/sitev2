@@ -9,7 +9,7 @@ function findRecipe() {
     
     // Make first AJAX request for a list of recipe IDs.
     $.ajax({
-      url: "foodsearch/recipe-id",
+      url: "/recipe-id",
       data: { q: recipeParameters }, // The ingredients selected by the user.
       type: "get", 
       success: function(response) {
@@ -25,7 +25,7 @@ function findRecipe() {
 
             // Use selected recipe ID to make second AJAX request for the recipe details.
             $.ajax({
-                url: "foodsearch/recipe-details",
+                url: "/recipe-details",
                 data: { rId: rId },
                 type: "get",
                 success: function(response) { 
