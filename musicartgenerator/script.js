@@ -160,79 +160,85 @@ document.getElementById('playButton').addEventListener('click', (formEvent) => {
   }
 
   formEvent.preventDefault();
-  spotifyApi.searchTracks(
-    queryInput.value.trim(), {limit: 1})
-    .then(function(results) {
-      let track = results.tracks.items[0];
-      let previewUrl = track.preview_url;
-      audioTag.src = track.preview_url;
-/*
-			const source = audioContext.createMediaElementSource(audioTag);
-			source.connect(analyser);
-			analyser.connect(audioContext.destination);
-*/
-      let request = new XMLHttpRequest();
-      request.open('GET', previewUrl, true);
-      request.responseType = 'arraybuffer';
-      request.onload = function() {
+    try {
+      await spotifyApi.searchTracks(
+        queryInput.value.trim(), {limit: 1, market: "US",})
+        .then(function(results) {
+          let track = results.tracks.items[0];
+          let previewUrl = track.preview_url;
+          audioTag.src = track.preview_url;
 
-        // Create offline context
-        let OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-        let offlineContext = new OfflineContext(2, 30 * 44100, 44100);
+          let request = new XMLHttpRequest();
+          request.open('GET', previewUrl, true);
+          request.responseType = 'arraybuffer';
+          request.onloadend = function() {
+            if (request.status == 404)  {
+              handleError();
+            }
+          }
+          request.onload = function() {
 
-        offlineContext.decodeAudioData(request.response, function(buffer) {
+            // Create offline context
+            let OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+            let offlineContext = new OfflineContext(2, 30 * 44100, 44100);
 
-          // Create buffer source
-          let source = offlineContext.createBufferSource();
-          source.buffer = buffer;
+            offlineContext.decodeAudioData(request.response, function(buffer) {
 
-          // Beats, or kicks, generally occur around the 100 to 150 hz range.
-          // Below this is often the bassline.  So let's focus just on that.
+              // Create buffer source
+              let source = offlineContext.createBufferSource();
+              source.buffer = buffer;
 
-          // First a lowpass to remove most of the song.
+              // Beats, or kicks, generally occur around the 100 to 150 hz range.
+              // Below this is often the bassline.  So let's focus just on that.
 
-          let lowpass = offlineContext.createBiquadFilter();
-          lowpass.type = "lowpass";
-          lowpass.frequency.value = 150;
-          lowpass.Q.value = 1;
+              // First a lowpass to remove most of the song.
 
-          // Run the output of the source through the low pass.
+              let lowpass = offlineContext.createBiquadFilter();
+              lowpass.type = "lowpass";
+              lowpass.frequency.value = 150;
+              lowpass.Q.value = 1;
 
-          source.connect(lowpass);
+              // Run the output of the source through the low pass.
 
-          // Now a highpass to remove the bassline.
+              source.connect(lowpass);
 
-          let highpass = offlineContext.createBiquadFilter();
-          highpass.type = "highpass";
-          highpass.frequency.value = 100;
-          highpass.Q.value = 1;
+              // Now a highpass to remove the bassline.
 
-          // Run the output of the lowpass through the highpass.
+              let highpass = offlineContext.createBiquadFilter();
+              highpass.type = "highpass";
+              highpass.frequency.value = 100;
+              highpass.Q.value = 1;
 
-          lowpass.connect(highpass);
+              // Run the output of the lowpass through the highpass.
 
-          // Run the output of the highpass through our offline context.
+              lowpass.connect(highpass);
 
-          highpass.connect(offlineContext.destination);
+              // Run the output of the highpass through our offline context.
 
-          // Start the source, and render the output into the offline conext.
+              highpass.connect(offlineContext.destination);
 
-          source.start(0);
-          offlineContext.startRendering();
+              // Start the source, and render the output into the offline conext.
+
+              source.start(0);
+              offlineContext.startRendering();
+            });
+
+            offlineContext.oncomplete = function(e) {
+              buffer = e.renderedBuffer;
+              peaks = getPeaks([buffer.getChannelData(0), buffer.getChannelData(1)]);
+              groups = getIntervals(peaks);
+
+              let top = groups.sort(function(intA, intB) {
+                return intB.count - intA.count;
+              }).splice(0, 5);
+
+                        console.log("BPM: " + Math.round(top[0].tempo));
+            };
+          };
+          request.send();
         });
-
-        offlineContext.oncomplete = function(e) {
-          buffer = e.renderedBuffer;
-          peaks = getPeaks([buffer.getChannelData(0), buffer.getChannelData(1)]);
-          groups = getIntervals(peaks);
-
-          let top = groups.sort(function(intA, intB) {
-            return intB.count - intA.count;
-          }).splice(0, 5);
-
-					console.log("BPM: " + Math.round(top[0].tempo));
-        };
-      };
-      request.send();
-    });
+    } catch (error) {
+        console.log('!!!!!!!!');
+        console.log(error);
+    }
 });
