@@ -9,6 +9,10 @@ body {
   align-items: center;
 }
 
+#retry-text {
+    display: none;
+}
+
 #form {
 	display: flex;
 	flex-direction: column;

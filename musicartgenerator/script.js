@@ -18,7 +18,8 @@ spotifyApi.getToken().then(function(response) {
 });
 
 let queryInput = document.querySelector('#query'),
-    audioTag = document.querySelector('#audio');
+    audioTag = document.querySelector('#audio'),
+    retryText = document.getElementById('retry-text');
 
 audioTag.addEventListener('play', renderVisualization);
 
@@ -42,7 +43,7 @@ function renderVisualization() {
 		const timeFraction = (audioTag.currentTime / totalSeconds).toFixed(3);
 
         growShapes();
-		if (timeFraction == (peaks[index].position / buffer.length).toFixed(3)) {
+		if (timeFraction == (index < peaks.length && peaks[index].position / buffer.length).toFixed(3)) {
             shrinkShapes();
             renderBeatAnimation();
             index++;
@@ -146,99 +147,95 @@ function getIntervals(peaks) {
   return groups;
 }
 
+function handleNotPlayableError() {
+    retryText.style.display = 'block';
+    queryInput.style.display = 'block';
+    document.getElementById('playCirclePlaying').setAttribute("id", "playCircle");
+}
+
 document.getElementById('playButton').addEventListener('click', (formEvent) => {
-	queryInput.remove();
-  drawBackground(canvas, {width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
-	drawBackground(barCanvas, {width: CANVAS_WIDTH, height: BAR_CANVAS_HEIGHT});
-
-  if (!audioTag.paused) {
-    audioTag.pause();
-		document.getElementById('playCirclePlaying').setAttribute("id", "playCircle");
-  } else if (audioTag.paused) {
-    audioTag.play();
-		document.getElementById('playCircle').setAttribute("id", "playCirclePlaying");
-  }
-
-  formEvent.preventDefault();
-    try {
-      spotifyApi.searchTracks(
-        queryInput.value.trim(), {limit: 1, market: "US",})
+    if (!audioTag.paused) {
+        audioTag.pause();
+        document.getElementById('playCirclePlaying').setAttribute("id", "playCircle");
+    } else if (audioTag.paused) {
+        audioTag.play();
+        document.getElementById('playCircle').setAttribute("id", "playCirclePlaying");
+    }
+    
+    formEvent.preventDefault();
+    spotifyApi.searchTracks(queryInput.value.trim(), {limit: 1, market: "US",})
         .then(function(results) {
-          let track = results.tracks.items[0];
-          let previewUrl = track.preview_url;
-          audioTag.src = track.preview_url;
+            let track = results.tracks.items[0];
+            if (!track) {
+                handleNotPlayableError();
+                return;
+            }
+            let previewUrl = track.preview_url;
+            audioTag.src = track.preview_url;
 
           let request = new XMLHttpRequest();
           request.open('GET', previewUrl, true);
           request.responseType = 'arraybuffer';
           request.onloadend = function() {
-            if (request.status == 404)  {
-              handleError();
+            if (request.status == 404 || request.status == 0)  {
+              handleNotPlayableError();
+            } else {
+                queryInput.style.display = 'none';
+                drawBackground(canvas, {width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
+                drawBackground(barCanvas, {width: CANVAS_WIDTH, height: BAR_CANVAS_HEIGHT});
             }
           }
           request.onload = function() {
 
-            // Create offline context
-            let OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-            let offlineContext = new OfflineContext(2, 30 * 44100, 44100);
+          // Create offline context
+          let OfflineContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+          let offlineContext = new OfflineContext(2, 30 * 44100, 44100);
 
-            offlineContext.decodeAudioData(request.response, function(buffer) {
+          offlineContext.decodeAudioData(request.response, function(buffer) {
 
-              // Create buffer source
-              let source = offlineContext.createBufferSource();
-              source.buffer = buffer;
+            // Create buffer source
+            let source = offlineContext.createBufferSource();
+            source.buffer = buffer;
 
-              // Beats, or kicks, generally occur around the 100 to 150 hz range.
-              // Below this is often the bassline.  So let's focus just on that.
+            // Beats, or kicks, generally occur around the 100 to 150 hz range.
+            // Below this is often the bassline.  So let's focus just on that.
 
-              // First a lowpass to remove most of the song.
+            // First a lowpass to remove most of the song.
+            let lowpass = offlineContext.createBiquadFilter();
+            lowpass.type = "lowpass";
+            lowpass.frequency.value = 150;
+            lowpass.Q.value = 1;
 
-              let lowpass = offlineContext.createBiquadFilter();
-              lowpass.type = "lowpass";
-              lowpass.frequency.value = 150;
-              lowpass.Q.value = 1;
+            // Run the output of the source through the low pass.
+            source.connect(lowpass);
 
-              // Run the output of the source through the low pass.
+            // Now a highpass to remove the bassline.
+            let highpass = offlineContext.createBiquadFilter();
+            highpass.type = "highpass";
+            highpass.frequency.value = 100;
+            highpass.Q.value = 1;
 
-              source.connect(lowpass);
+            // Run the output of the lowpass through the highpass.
+            lowpass.connect(highpass);
 
-              // Now a highpass to remove the bassline.
+            // Run the output of the highpass through our offline context.
+            highpass.connect(offlineContext.destination);
 
-              let highpass = offlineContext.createBiquadFilter();
-              highpass.type = "highpass";
-              highpass.frequency.value = 100;
-              highpass.Q.value = 1;
+            // Start the source, and render the output into the offline conext.
+            source.start(0);
+            offlineContext.startRendering();
+          });
 
-              // Run the output of the lowpass through the highpass.
-
-              lowpass.connect(highpass);
-
-              // Run the output of the highpass through our offline context.
-
-              highpass.connect(offlineContext.destination);
-
-              // Start the source, and render the output into the offline conext.
-
-              source.start(0);
-              offlineContext.startRendering();
-            });
-
-            offlineContext.oncomplete = function(e) {
+          offlineContext.oncomplete = function(e) {
               buffer = e.renderedBuffer;
               peaks = getPeaks([buffer.getChannelData(0), buffer.getChannelData(1)]);
               groups = getIntervals(peaks);
 
-              let top = groups.sort(function(intA, intB) {
-                return intB.count - intA.count;
-              }).splice(0, 5);
+              let top = groups.sort((intA, intB) => intB.count - intA.count).splice(0, 5);
 
-                        console.log("BPM: " + Math.round(top[0].tempo));
-            };
+              console.log("BPM: " + Math.round(top[0].tempo));
           };
-          request.send();
-        });
-    } catch (error) {
-        console.log('!!!!!!!!');
-        console.log(error);
-    }
+        };
+        request.send();
+      });
 });
