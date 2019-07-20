@@ -161,7 +161,7 @@ document.getElementById('playButton').addEventListener('click', (formEvent) => {
 
   formEvent.preventDefault();
     try {
-      await spotifyApi.searchTracks(
+      spotifyApi.searchTracks(
         queryInput.value.trim(), {limit: 1, market: "US",})
         .then(function(results) {
           let track = results.tracks.items[0];
