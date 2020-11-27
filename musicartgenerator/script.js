@@ -34,6 +34,10 @@ function renderVisualization() {
         return;
     }
 
+    if (index >= peaks.length) {
+        retryLoad();
+    }
+
 	const nowTime = Date.now();
 	const dt = nowTime - previousTime;
  
@@ -43,7 +47,7 @@ function renderVisualization() {
 		const timeFraction = (audioTag.currentTime / totalSeconds).toFixed(3);
 
         growShapes();
-		if (timeFraction == (index < peaks.length && peaks[index].position / buffer.length).toFixed(3)) {
+		if (timeFraction == (peaks[index].position / buffer.length).toFixed(3)) {
             shrinkShapes();
             renderBeatAnimation();
             index++;
@@ -147,8 +151,10 @@ function getIntervals(peaks) {
   return groups;
 }
 
-function handleNotPlayableError() {
-    retryText.style.display = 'block';
+function retryLoad(displayErrorMessage = false) {
+    if (displayErrorMessage) {
+        retryText.style.display = 'block';
+    }
     queryInput.style.display = 'block';
     document.getElementById('playCirclePlaying').setAttribute("id", "playCircle");
 }
@@ -167,7 +173,7 @@ document.getElementById('playButton').addEventListener('click', (formEvent) => {
         .then(function(results) {
             let track = results.tracks.items[0];
             if (!track) {
-                handleNotPlayableError();
+                retryLoad(/* displayErrorMessage */ true);
                 return;
             }
             let previewUrl = track.preview_url;
@@ -178,7 +184,7 @@ document.getElementById('playButton').addEventListener('click', (formEvent) => {
           request.responseType = 'arraybuffer';
           request.onloadend = function() {
             if (request.status == 404 || request.status == 0)  {
-              handleNotPlayableError();
+                retryLoad(/* displayErrorMessage */ true);
             } else {
                 queryInput.style.display = 'none';
                 drawBackground(canvas, {width: CANVAS_WIDTH, height: CANVAS_HEIGHT});
